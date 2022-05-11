@@ -29,6 +29,7 @@ stages:
 ############################################
 - stage: ProdDeploy
   jobs:
-	- job: ProdDeployJob
-	  steps:
-		- bash: echo ProdDeploy
+  - job: ProdDeployJob
+    steps:
+    - bash: echo ProdDeploy
+    
