@@ -33,7 +33,14 @@ stages:
     - bash: python --version 
     - bash: mvn -version 
     - bash: ls -R $(Build.ArtifactStagingDirectory)
-
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: 'System.DefaultWorkingDirectory'
+        Contents: |
+          **/*.yml
+          **/*.tf
+        TargetFolder: 'Build.ArtifactStagingDirectory'
+        - bash: ls -R $(Build.ArtifactStagingDirectory)
   # - job: SecoundJob
   #   steps:
   #   - bash: echo Build SecoundJob and PLvariable $(PipelineLevelVariable)
