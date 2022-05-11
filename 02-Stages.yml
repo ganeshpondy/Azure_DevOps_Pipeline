@@ -24,4 +24,4 @@ stages:
   jobs:
   - job: DevDeployJob
     steps:
-    -bash: echo DevDeployJob
+    - bash: echo DevDeployJob
