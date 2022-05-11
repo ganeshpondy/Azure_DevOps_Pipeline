@@ -13,33 +13,37 @@ pool:
 
 stages:
 - stage: Build
+  variables:
+   stage_var: Build
   jobs:
   - job: FirstJob
     steps:
-    - bash: echo Build FirstJob
+    - bash: echo Build FirstJob and stage varaible $(stage_var)
   - job: SecoundJob
     steps:
-    - bash: echo Build SecoundJob
+    - bash: echo Build SecoundJob and PLvariable $(PipelineLevelVariable)
 ############################################
 - stage: DevDeploy
+  variables:
+   stage_var: Dev
   dependsOn: Build
   jobs:
   - job: DevDeployJob
     steps:
-    - bash: echo DevDeployJob
+    - bash: echo $(stage_var)_DeployJob
 ############################################
-- stage: QADeploy
-  dependsOn: Build
-  jobs:
-  - job: QADeployJob
-    steps:
-      - bash: echo QADeployJob
+# - stage: QADeploy
+#   dependsOn: Build
+#   jobs:
+#   - job: QADeployJob
+#     steps:
+#       - bash: echo QADeployJob
 ############################################
-- stage: ProdDeploy
-  dependsOn:
-  - DevDeploy
-  - QADeploy
-  jobs:
-  - job: ProdDeployJob
-    steps:
-    - bash: echo ProdDeploy
+# - stage: ProdDeploy
+#   dependsOn:
+#   - DevDeploy
+#   - QADeploy
+#   jobs:
+#   - job: ProdDeployJob
+#     steps:
+#     - bash: echo ProdDeploy
