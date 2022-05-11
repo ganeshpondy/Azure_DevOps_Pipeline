@@ -23,14 +23,14 @@ stages:
     steps:
     - bash: echo Build SecoundJob and PLvariable $(PipelineLevelVariable)
 ############################################
-- stage: DevDeploy
-  variables:
-   stage_var: Dev
-  dependsOn: Build
-  jobs:
-  - job: DevDeployJob
-    steps:
-    - bash: echo $(stage_var)_DeployJob
+# - stage: DevDeploy
+#   variables:
+#    stage_var: Dev
+#   dependsOn: Build
+#   jobs:
+#   - job: DevDeployJob
+#     steps:
+#     - bash: echo $(stage_var)_DeployJob
 ############################################
 # - stage: QADeploy
 #   dependsOn: Build
