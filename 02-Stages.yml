@@ -18,28 +18,28 @@ stages:
   jobs:
   - job: FirstJob
     steps:
-    - bash: echo Build FirstJob and stage varaible $(stage_var)
-    - bash: echo Build FirstJob
-    - bash: echo $(PipelineLevelVariable)
-    - bash: echo $(Build.BuildNumber)
-    - bash: echo $(Build.BuildId)
-    - bash: echo $(Build.SourceBranchName)
-    - bash: echo $(Build.SourcesDirectory)
+    # - bash: echo Build FirstJob and stage varaible $(stage_var)
+    # - bash: echo Build FirstJob
+    # - bash: echo $(PipelineLevelVariable)
+    # - bash: echo $(Build.BuildNumber)
+    # - bash: echo $(Build.BuildId)
+    # - bash: echo $(Build.SourceBranchName)
+    # - bash: echo $(Build.SourcesDirectory)
+    # - bash: java -version
+    # - bash: node --version
+    # - bash: python --version 
+    # - bash: mvn -version 
     - bash: echo $(System.DefaultWorkingDirectory)
     - bash: ls -R $(System.DefaultWorkingDirectory)
     - bash: echo $(Build.ArtifactStagingDirectory)
-    - bash: java -version
-    - bash: node --version
-    - bash: python --version 
-    - bash: mvn -version 
     - bash: ls -R $(Build.ArtifactStagingDirectory)
     - task: CopyFiles@2
       inputs:
-        SourceFolder: 'System.DefaultWorkingDirectory'
+        SourceFolder: '$(System.DefaultWorkingDirectory)'
         Contents: |
-          **/*.yml
+          **/*.yaml
           **/*.tf
-        TargetFolder: 'Build.ArtifactStagingDirectory'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
     - bash: ls -R $(Build.ArtifactStagingDirectory)
   # - job: SecoundJob
   #   steps:
