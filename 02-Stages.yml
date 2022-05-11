@@ -40,7 +40,7 @@ stages:
           **/*.yml
           **/*.tf
         TargetFolder: 'Build.ArtifactStagingDirectory'
-        - bash: ls -R $(Build.ArtifactStagingDirectory)
+    - bash: ls -R $(Build.ArtifactStagingDirectory)
   # - job: SecoundJob
   #   steps:
   #   - bash: echo Build SecoundJob and PLvariable $(PipelineLevelVariable)
