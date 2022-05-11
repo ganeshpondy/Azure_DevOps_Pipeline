@@ -19,9 +19,24 @@ stages:
   - job: FirstJob
     steps:
     - bash: echo Build FirstJob and stage varaible $(stage_var)
-  - job: SecoundJob
-    steps:
-    - bash: echo Build SecoundJob and PLvariable $(PipelineLevelVariable)
+    - bash: echo Build FirstJob
+    - bash: echo $(PipelineLevelVariable)
+    - bash: echo $(Build.BuildNumber)
+    - bash: echo $(Build.BuildId)
+    - bash: echo $(Build.SourceBranchName)
+    - bash: echo $(Build.SourcesDirectory)
+    - bash: echo $(System.DefaultWorkingDirectory)
+    - bash: ls -R $(System.DefaultWorkingDirectory)
+    - bash: echo $(Build.ArtifactStagingDirectory)
+    - bash: java -version
+    - bash: node --version
+    - bash: python --version 
+    - bash: mvn -version 
+    - bash: ls -R $(Build.ArtifactStagingDirectory)
+
+  # - job: SecoundJob
+  #   steps:
+  #   - bash: echo Build SecoundJob and PLvariable $(PipelineLevelVariable)
 ############################################
 # - stage: DevDeploy
 #   variables:
