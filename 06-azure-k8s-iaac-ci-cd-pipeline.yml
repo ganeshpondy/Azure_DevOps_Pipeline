@@ -1,0 +1,78 @@
+#Stage:1
+# Build Docker Image and save it in hub
+# Copy and Publish K8S Files Artifacts
+
+#Stage:2
+# Download the K8S Artifacts Files 
+# Deploy to K8S Cluster with the Docker Image
+#############################################################################
+
+#Stage:1
+# Build Docker Image and save it in hub
+
+trigger:
+- main
+
+resources:
+- repo: self
+
+variables:
+  tag: '55'
+#  tag: '$(Build.BuildId)'
+
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    # - task: Docker@2
+    #   displayName: Build an image
+    #   inputs:
+    #     containerRegistry: 'DockerHub'
+    #     repository: 'ganeshpondy/currency-exchange-devops'
+    #     command: 'buildAndPush'
+    #     Dockerfile: '**/Dockerfile'
+    #     tags: '$(tag)'
+#Stage:1
+# Copy and Publish K8S Files Artifacts
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: 'test'
+        Contents: '**/*yaml'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'manifests'
+        publishLocation: 'Container'
+#Stage:2
+# Download the K8S Artifacts Files 
+- stage: Deploy
+  displayName: Deploy image
+  jobs:
+  - job: Deploy
+    displayName: Deploy
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        buildType: '$(System.DefaultWorkingDirectory)'
+        artifactName: 'manifests'
+        itemPattern: '**/*yaml'
+        targetPath: '$(System.ArtifactDirectory)'
+
+#Stage:2
+# Deploy to K8S Cluster with the Docker Image
+    - task: KubernetesManifest@0
+      inputs:
+        action: 'deploy'
+        kubernetesServiceConnection: 'azure-k8s-connection'
+        namespace: 'default'
+        manifests: '$(System.ArtifactDirectory)/configuration/kubernetes/configuration/deployment.yaml'
+        containers: 'ganeshpondy/currency-exchange-devops:$(tag)'
+      #  containers: 'ganeshpondy/currency-exchange-devops:55'  
