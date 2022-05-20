@@ -41,7 +41,7 @@ stages:
 # Copy and Publish K8S Files Artifacts
     - task: CopyFiles@2
       inputs:
-        SourceFolder: 'test'
+        SourceFolder: '$(System.DefaultWorkingDirectory)'
         Contents: '**/*.yaml'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
     - task: PublishBuildArtifacts@1
@@ -61,7 +61,7 @@ stages:
     steps:
     - task: DownloadPipelineArtifact@2
       inputs:
-        buildType: '$(System.DefaultWorkingDirectory)'
+        buildType: 'current'
         artifactName: 'manifests'
         itemPattern: '**/*.yaml'
         targetPath: '$(System.ArtifactDirectory)'
