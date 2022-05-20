@@ -42,7 +42,7 @@ stages:
     - task: CopyFiles@2
       inputs:
         SourceFolder: 'test'
-        Contents: '**/*yaml'
+        Contents: '**/*.yaml'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
     - task: PublishBuildArtifacts@1
       inputs:
@@ -63,7 +63,7 @@ stages:
       inputs:
         buildType: '$(System.DefaultWorkingDirectory)'
         artifactName: 'manifests'
-        itemPattern: '**/*yaml'
+        itemPattern: '**/*.yaml'
         targetPath: '$(System.ArtifactDirectory)'
 
 #Stage:2
