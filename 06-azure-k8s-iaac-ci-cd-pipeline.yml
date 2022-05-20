@@ -73,6 +73,6 @@ stages:
         action: 'deploy'
         kubernetesServiceConnection: 'azure-k8s-connection'
         namespace: 'default'
-        manifests: '$(System.ArtifactDirectory)/configuration/kubernetes/configuration/deployment.yaml'
+        manifests: '$(System.ArtifactDirectory)/configuration/kubernetes/deployment.yaml'
         containers: 'ganeshpondy/currency-exchange-devops:$(tag)'
       #  containers: 'ganeshpondy/currency-exchange-devops:55'  
