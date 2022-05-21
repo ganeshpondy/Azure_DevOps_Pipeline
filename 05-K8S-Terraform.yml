@@ -38,3 +38,11 @@ steps:
     commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publickey.secureFilePath)'
     allowTelemetryCollection: true
 
+- task: TerraformCLI@0
+  inputs:
+    command: 'destroy'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/azure/kubernetes'
+    environmentServiceName: 'Azure_RS'
+    providerAzureRmSubscriptionId: '37b080b4-a1b2-418b-ab35-3997a8169299'
+    allowTelemetryCollection: true
+
