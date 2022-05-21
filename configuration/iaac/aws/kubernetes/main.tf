@@ -80,7 +80,7 @@ module "in28minutes-cluster" {
   # EKS Managed Node Group(s)
   eks_managed_node_group_defaults = {
     disk_size      = 10
-    instance_types = ["t3.large", "m5.large", "m5n.large", "m5zn.large"]
+    instance_types = ["t2.micro", "m5.large", "m5n.large", "m5zn.large"]
   }
 
   eks_managed_node_groups = {
@@ -90,7 +90,7 @@ module "in28minutes-cluster" {
       max_size     = 3
       desired_size = 2
 
-      instance_types = ["t3.large"]
+      instance_types = ["t2.micro"]
       capacity_type  = "SPOT"
     }
   }
