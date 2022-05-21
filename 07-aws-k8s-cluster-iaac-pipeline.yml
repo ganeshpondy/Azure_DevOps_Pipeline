@@ -18,3 +18,9 @@ steps:
     backendServiceAWS: 'AWS-for-Terraform'
     backendAWSBucketName: 'terraform-backend-bucket-ganeshpondy'
     backendAWSKey: 'Kubernetes-dev.tfstate'
+- task: TerraformTaskV3@3
+  inputs:
+    provider: 'aws'
+    command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/aws/kubernetes'
+    environmentServiceNameAWS: 'AWS-for-Terraform'
