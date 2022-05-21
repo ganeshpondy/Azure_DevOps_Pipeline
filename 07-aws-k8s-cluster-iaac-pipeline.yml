@@ -1,0 +1,20 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run a one-line script'
+
+#01-Terraform init & Backend
+#02Terraform Apply
+- task: TerraformTaskV3@3
+  inputs:
+    provider: 'aws'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/aws/kubernetes'
+    backendServiceAWS: 'AWS-for-Terraform'
+    backendAWSBucketName: 'terraform-backend-bucket-ganeshpondy'
+    backendAWSKey: 'Kubernetes-dev.tfstate'
