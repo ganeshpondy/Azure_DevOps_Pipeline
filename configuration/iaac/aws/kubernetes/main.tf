@@ -33,42 +33,69 @@ provider "kubernetes" {
   #version                = "~> 1.9"
 }
 
+# module "in28minutes-cluster" {
+#   source          = "terraform-aws-modules/eks/aws"
+#   cluster_name    = "in28minutes-cluster"
+#   cluster_version = "1.21"
+#   subnet_ids      = ["subnet-0841eb08b7c9a9436", "subnet-0e4d5a439490e29b2"] #CHANGE
+#   #subnets = data.aws_subnet_ids.subnets.ids
+#   vpc_id          = aws_default_vpc.default.id
+
+#   #vpc_id         = "vpc-1234556abcdef"
+
+#   # node_groups = [
+#   #   {
+#   #     instance_type = "t2.micro"
+#   #     max_capacity  = 5
+#   #     desired_capacity = 2
+#   #     min_capacity  = 2
+#   #   }
+#   # ]
+#     eks_managed_node_groups = {
+#     blue = {}
+#     green = {
+#       min_size     = 2
+#       max_size     = 3
+#       desired_size = 2
+
+#       instance_types = ["t2.micro"]
+#       capacity_type  = "SPOT"
+#     }
+#   }
+# }
+
 module "in28minutes-cluster" {
-  source          = "terraform-aws-modules/eks/aws"
+  source  = "terraform-aws-modules/eks/aws"
+  version = "~> 18.0"
+
   cluster_name    = "in28minutes-cluster"
   cluster_version = "1.21"
-  subnet_ids      = ["subnet-0841eb08b7c9a9436", "subnet-0e4d5a439490e29b2"] #CHANGE
-  #subnets = data.aws_subnet_ids.subnets.ids
-  vpc_id          = aws_default_vpc.default.id
 
-  #vpc_id         = "vpc-1234556abcdef"
+  cluster_endpoint_private_access = true
+  cluster_endpoint_public_access  = true
 
-  # node_groups = [
-  #   {
-  #     instance_type = "t2.micro"
-  #     max_capacity  = 5
-  #     desired_capacity = 2
-  #     min_capacity  = 2
-  #   }
-  # ]
-  #   eks_managed_node_groups = {
-  #   blue = {}
-  #   green = {
-  #     min_size     = 2
-  #     max_size     = 3
-  #     desired_size = 2
+  vpc_id     = aws_default_vpc.default.id
+  subnet_ids = ["subnet-0841eb08b7c9a9436", "subnet-0e4d5a439490e29b2"]
 
-  #     instance_types = ["t2.micro"]
-  #     capacity_type  = "SPOT"
-  #   }
-  # }
-  min_size     = 2
-  max_size     = 3
-  desired_size = 2
+  # EKS Managed Node Group(s)
+  eks_managed_node_group_defaults = {
+    disk_size      = 10
+    instance_types = ["t3.large", "m5.large", "m5n.large", "m5zn.large"]
+  }
 
-  instance_types = ["t2.micro"]
-  capacity_type  = "SPOT"
+  eks_managed_node_groups = {
+    blue = {}
+    green = {
+      min_size     = 2
+      max_size     = 3
+      desired_size = 2
+
+      instance_types = ["t3.large"]
+      capacity_type  = "SPOT"
+    }
+  }
 }
+
 
 data "aws_eks_cluster" "cluster" {
   name = module.in28minutes-cluster.cluster_id
