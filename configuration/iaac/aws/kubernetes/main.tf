@@ -7,7 +7,7 @@
 
 terraform {
   backend "s3" {
-    bucket = "mybucket" # Will be overridden from build
+    bucket = "terraform-backend-bucket-ganeshpondy" # Will be overridden from build
     key    = "path/to/my/key" # Will be overridden from build
     region = "us-east-1"
   }
@@ -33,7 +33,7 @@ module "in28minutes-cluster" {
   source          = "terraform-aws-modules/eks/aws"
   cluster_name    = "in28minutes-cluster"
   cluster_version = "1.14"
-  subnets         = ["subnet-3f7b2563", "subnet-4a7d6a45"] #CHANGE
+  subnets         = ["subnet-0841eb08b7c9a9436", "subnet-0e4d5a439490e29b2"] #CHANGE
   #subnets = data.aws_subnet_ids.subnets.ids
   vpc_id          = aws_default_vpc.default.id
 
@@ -43,8 +43,8 @@ module "in28minutes-cluster" {
     {
       instance_type = "t2.micro"
       max_capacity  = 5
-      desired_capacity = 3
-      min_capacity  = 3
+      desired_capacity = 2
+      min_capacity  = 2
     }
   ]
 }
