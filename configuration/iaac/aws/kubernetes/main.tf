@@ -17,7 +17,11 @@ resource "aws_default_vpc" "default" {
 
 }
 
-data "aws_subnet_ids" "subnets" {
+# data "aws_subnet_ids" "subnets" {
+#   vpc_id = aws_default_vpc.default.id
+# }
+
+data "aws_subnets" "subnets" {
   vpc_id = aws_default_vpc.default.id
 }
 
@@ -25,7 +29,7 @@ provider "kubernetes" {
   host                   = data.aws_eks_cluster.cluster.endpoint
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
   token                  = data.aws_eks_cluster_auth.cluster.token
-  load_config_file       = false
+  #load_config_file       = false
   #version                = "~> 1.9"
 }
 
