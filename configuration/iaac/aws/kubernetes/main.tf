@@ -51,17 +51,23 @@ module "in28minutes-cluster" {
   #     min_capacity  = 2
   #   }
   # ]
-    eks_managed_node_groups = {
-    blue = {}
-    green = {
-      min_size     = 2
-      max_size     = 3
-      desired_size = 2
+  #   eks_managed_node_groups = {
+  #   blue = {}
+  #   green = {
+  #     min_size     = 2
+  #     max_size     = 3
+  #     desired_size = 2
 
-      instance_types = ["t2.micro"]
-      capacity_type  = "SPOT"
-    }
-  }
+  #     instance_types = ["t2.micro"]
+  #     capacity_type  = "SPOT"
+  #   }
+  # }
+  min_size     = 2
+  max_size     = 3
+  desired_size = 2
+
+  instance_types = ["t2.micro"]
+  capacity_type  = "SPOT"
 }
 
 data "aws_eks_cluster" "cluster" {
